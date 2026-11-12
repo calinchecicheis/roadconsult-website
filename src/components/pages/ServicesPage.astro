@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../PageHero.astro';
+import ServiceCards from '../ServiceCards.astro';
+import Equipment from '../Equipment.astro';
+import ContactCard from '../ContactCard.astro';
+import { SITE } from '../../config';
+import { ROUTES, SERVICE_KEYS, T, type Lang } from '../../i18n';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = T[lang];
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: SERVICE_KEYS.map((k, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: t.services[k].title,
+      url: new URL(ROUTES[k][lang], SITE.url).href,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: SITE.name, item: new URL(ROUTES.home[lang], SITE.url).href },
+      { '@type': 'ListItem', position: 2, name: t.nav.services, item: new URL(ROUTES.services[lang], SITE.url).href },
+    ],
+  },
+];
+---
+
+<Layout lang={lang} page="services" title={t.servicesPage.metaTitle} description={t.servicesPage.metaDescription} jsonLd={jsonLd}>
+  <PageHero lang={lang} kicker={t.nav.services} title={t.servicesPage.title} lead={t.servicesPage.lead} crumbs={[{ label: t.nav.services }]} />
+
+  <section class="container section first">
+    <ServiceCards lang={lang} headingLevel="h2" />
+  </section>
+
+  <section class="container section">
+    <div class="section-head">
+      <div>
+        <p class="kicker">{t.nav.equipment}</p>
+        <h2 class="section-title">{t.home.equipmentTitle}</h2>
+      </div>
+      <p class="lead">{t.home.equipmentLead}</p>
+    </div>
+    <Equipment lang={lang} />
+  </section>
+
+  <ContactCard lang={lang} />
+</Layout>
+
+<style>
+  .first {
+    padding-top: 24px;
+  }
+</style>

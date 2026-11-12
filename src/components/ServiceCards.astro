@@ -1,0 +1,99 @@
+---
+import { ROUTES, SERVICE_KEYS, T, type Lang, type ServiceKey } from '../i18n';
+interface Props {
+  lang: Lang;
+  exclude?: ServiceKey;
+  headingLevel?: 'h2' | 'h3';
+}
+const { lang, exclude, headingLevel = 'h3' } = Astro.props;
+const t = T[lang];
+const keys = SERVICE_KEYS.filter((k) => k !== exclude);
+const H = headingLevel;
+---
+
+<div class:list={['cards', { two: keys.length === 2 }]}>
+  {
+    keys.map((k) => {
+      const s = t.services[k];
+      const n = String(SERVICE_KEYS.indexOf(k) + 1).padStart(2, '0');
+      return (
+        <a href={ROUTES[k][lang]} class="panel card">
+          <span class="num mono">{n}</span>
+          <H class="title">{s.title}</H>
+          <p class="short">{s.short}</p>
+          <ul>
+            {s.includes.slice(0, 3).map((i) => (
+              <li>{i}</li>
+            ))}
+          </ul>
+          <span class="more">{t.cta.details}</span>
+        </a>
+      );
+    })
+  }
+</div>
+
+<style>
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .cards.two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-decoration: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow);
+  }
+  .num {
+    font-size: 13px;
+    color: var(--label);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .title {
+    font-size: 24px;
+  }
+  .short {
+    color: var(--text-soft);
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
+  }
+  li {
+    display: flex;
+    gap: 10px;
+  }
+  li::before {
+    content: '';
+    flex: none;
+    width: 10px;
+    height: 3px;
+    margin-top: 11px;
+    background: var(--yellow);
+  }
+  .more {
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  @media (max-width: 960px) {
+    .cards,
+    .cards.two {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

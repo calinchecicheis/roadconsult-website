@@ -1,0 +1,172 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../PageHero.astro';
+import ServiceCards from '../ServiceCards.astro';
+import ContactCard from '../ContactCard.astro';
+import { SITE } from '../../config';
+import { ROUTES, T, type Lang, type ServiceKey } from '../../i18n';
+interface Props {
+  lang: Lang;
+  service: ServiceKey;
+}
+const { lang, service } = Astro.props;
+const t = T[lang];
+const s = t.services[service];
+const url = new URL(ROUTES[service][lang], SITE.url).href;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: s.title,
+    description: s.metaDescription,
+    url,
+    provider: { '@id': `${SITE.url}/#business` },
+    areaServed: { '@type': 'Country', name: 'Romania' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: s.faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: SITE.name, item: new URL(ROUTES.home[lang], SITE.url).href },
+      { '@type': 'ListItem', position: 2, name: t.nav.services, item: new URL(ROUTES.services[lang], SITE.url).href },
+      { '@type': 'ListItem', position: 3, name: s.title, item: url },
+    ],
+  },
+];
+---
+
+<Layout lang={lang} page={service} title={s.metaTitle} description={s.metaDescription} jsonLd={jsonLd}>
+  <PageHero
+    lang={lang}
+    kicker={t.nav.services}
+    title={s.headline}
+    lead={s.intro}
+    crumbs={[{ label: t.nav.services, href: ROUTES.services[lang] }, { label: s.title }]}
+  >
+    <div class="ctas">
+      <a href="#contact" class="btn btn-yellow btn-lg">{t.cta.quoteFree}</a>
+      <a href={SITE.whatsapp} target="_blank" rel="noopener" class="btn btn-line btn-lg">{t.cta.whatsapp}</a>
+    </div>
+  </PageHero>
+
+  <section class="container section first">
+    <div class="split">
+      <div class="panel includes">
+        <h2>{s.includesTitle}</h2>
+        <ul>
+          {
+            s.includes.map((i) => (
+              <li>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7" /></svg>
+                {i}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="faq">
+        <h2 class="faq-title">{t.faqTitle}</h2>
+        {
+          s.faq.map((f) => (
+            <details class="qa">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="section-head">
+      <p class="kicker">{t.cta.allServices}</p>
+    </div>
+    <ServiceCards lang={lang} exclude={service} />
+  </section>
+
+  <ContactCard lang={lang} preselect={service} />
+</Layout>
+
+<style>
+  .first {
+    padding-top: 24px;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 16px;
+    align-items: start;
+  }
+  .includes h2,
+  .faq-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .includes ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .includes li {
+    display: flex;
+    gap: 12px;
+  }
+  .includes svg {
+    flex: none;
+    margin-top: 3px;
+    padding: 2px;
+    width: 22px;
+    height: 22px;
+    background: var(--yellow);
+    color: var(--asphalt);
+    border-radius: 4px;
+  }
+  .faq {
+    padding: 32px;
+  }
+  .qa {
+    border-top: 1px solid var(--line);
+  }
+  .qa:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .qa summary {
+    cursor: pointer;
+    padding: 18px 0;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .qa p {
+    padding: 0 0 20px;
+    color: var(--text-soft);
+    max-width: 44em;
+  }
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .faq {
+      padding: 24px 0 0;
+    }
+  }
+</style>

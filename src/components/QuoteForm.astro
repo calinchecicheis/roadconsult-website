@@ -1,0 +1,84 @@
+---
+import { SITE } from '../config';
+import { ROUTES, SERVICE_KEYS, T, type Lang, type ServiceKey } from '../i18n';
+interface Props {
+  lang: Lang;
+  preselect?: ServiceKey;
+}
+const { lang, preselect } = Astro.props;
+const t = T[lang];
+const redirect = new URL(ROUTES.thanks[lang], SITE.url).href;
+---
+
+<form class="quote-form" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value={SITE.web3formsKey} />
+  <input type="hidden" name="subject" value={t.form.subject} />
+  <input type="hidden" name="from_name" value="roadconsult.ro" />
+  <input type="hidden" name="redirect" value={redirect} />
+  <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <div class="two">
+    <label class="field">{t.form.name}<input type="text" name="name" autocomplete="name" required /></label>
+    <label class="field">{t.form.contact}<input type="text" name="contact" autocomplete="email" required /></label>
+  </div>
+  <div class="two">
+    <label class="field"
+      >{t.form.service}
+      <select name="service">
+        {SERVICE_KEYS.map((k) => <option selected={k === preselect}>{t.services[k].title}</option>)}
+        <option>{t.form.serviceOther}</option>
+      </select>
+    </label>
+    <label class="field">{t.form.location}<input type="text" name="location" autocomplete="address-level2" /></label>
+  </div>
+  <label class="field">{t.form.message}<textarea name="message" rows="4" required></textarea></label>
+  <label class="consent">
+    <input type="checkbox" name="consent" value="yes" required />
+    <span>{t.form.consent} <a href={ROUTES.privacy[lang]}>{t.form.consentLink}</a>.</span>
+  </label>
+  <button type="submit" class="btn btn-yellow btn-lg">{t.form.submit}</button>
+</form>
+
+<style>
+  .quote-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .two {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .quote-form :global(.field) {
+    color: inherit;
+  }
+  .consent {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .consent input {
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    flex: none;
+    accent-color: var(--yellow);
+  }
+  .consent a {
+    color: inherit;
+  }
+  button {
+    align-self: flex-start;
+  }
+  @media (max-width: 640px) {
+    .two {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    button {
+      align-self: stretch;
+    }
+  }
+</style>

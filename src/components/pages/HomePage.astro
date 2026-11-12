@@ -1,0 +1,428 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Contours from '../Contours.astro';
+import ServiceCards from '../ServiceCards.astro';
+import Equipment from '../Equipment.astro';
+import ProjectRows from '../ProjectRows.astro';
+import ContactCard from '../ContactCard.astro';
+import { SITE } from '../../config';
+import { PROJECT_PLACES, ROUTES, T, type Lang } from '../../i18n';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = T[lang];
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: SITE.url,
+  inLanguage: ['ro', 'en', 'de'],
+  publisher: { '@id': `${SITE.url}/#business` },
+};
+---
+
+<Layout lang={lang} page="home" title={t.home.metaTitle} description={t.home.metaDescription} jsonLd={[website]}>
+  <section class="container hero">
+    <div class="hero-text">
+      <p class="coords mono">N 47°21′ · E 22°20′ — Marghita, Bihor</p>
+      <h1>{t.home.h1}</h1>
+      <p class="lead">{t.home.lead}</p>
+      <div class="ctas">
+        <a href={ROUTES.contact[lang]} class="btn btn-yellow btn-lg">{t.cta.quoteFree}</a>
+        <a href={SITE.whatsapp} target="_blank" rel="noopener" class="btn btn-line btn-lg">{t.cta.whatsapp}</a>
+      </div>
+      <dl class="facts">
+        {
+          t.home.facts.map((f) => (
+            <div>
+              <dt class="mono">{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+    <div class="hero-map panel" aria-hidden="true">
+      <Contours />
+      <div class="station">
+        <span class="cross"></span>
+        <span class="mono tag">RC · 2017</span>
+      </div>
+      <span class="mono axis axis-x">E 22°20′</span>
+      <span class="mono axis axis-y">N 47°21′</span>
+      <div class="roadline road"></div>
+    </div>
+  </section>
+
+  <section class="container" aria-label={t.home.placesLabel}>
+    <div class="places">
+      <p class="places-label mono">{t.home.placesLabel}</p>
+      <ul>
+        {PROJECT_PLACES.map((p) => <li>{p}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="container section">
+    <p class="kicker">{t.home.valuesTitle}</p>
+    <div class="grid-4 values">
+      {
+        t.home.values.map((v, i) => (
+          <div class="value">
+            <span class="mono n">{String(i + 1).padStart(2, '0')}</span>
+            <h2 class="v-title">{v.title}</h2>
+            <p>{v.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container section" id="servicii">
+    <div class="section-head">
+      <div>
+        <p class="kicker">{t.nav.services}</p>
+        <h2 class="section-title">{t.home.servicesTitle}</h2>
+      </div>
+      <p class="lead">{t.home.servicesLead}</p>
+    </div>
+    <ServiceCards lang={lang} />
+  </section>
+
+  <section class="container section">
+    <p class="kicker">{t.home.processTitle}</p>
+    <ol class="steps">
+      {
+        t.home.process.map((s, i) => (
+          <li>
+            <span class="dot mono">{i + 1}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="container section" id="echipamente">
+    <div class="section-head">
+      <div>
+        <p class="kicker">{t.nav.equipment}</p>
+        <h2 class="section-title">{t.home.equipmentTitle}</h2>
+      </div>
+      <p class="lead">{t.home.equipmentLead}</p>
+    </div>
+    <Equipment lang={lang} />
+  </section>
+
+  <section class="container section" id="proiecte">
+    <div class="section-head">
+      <div>
+        <p class="kicker">{t.nav.projects}</p>
+        <h2 class="section-title">{t.home.projectsTitle}</h2>
+      </div>
+      <a href={ROUTES.projects[lang]} class="more">{t.cta.allProjects}</a>
+    </div>
+    <ProjectRows lang={lang} />
+  </section>
+
+  <section class="container section" id="despre">
+    <div class="story panel">
+      <div>
+        <p class="kicker">{t.nav.about}</p>
+        <h2 class="section-title">{t.home.storyTitle}</h2>
+      </div>
+      <div class="story-text">
+        <p class="lead">{t.about.story[0]}</p>
+        <a href={ROUTES.about[lang]} class="more">{t.cta.aboutUs}</a>
+      </div>
+    </div>
+  </section>
+
+  <ContactCard lang={lang} />
+</Layout>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 48px;
+    align-items: stretch;
+    padding-top: 64px;
+  }
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+  }
+  .coords {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--label);
+  }
+  h1 {
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 16px 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .facts div {
+    padding: 16px 32px 0 0;
+    margin-right: 32px;
+    border-right: 1px solid var(--line);
+  }
+  .facts div:last-child {
+    border-right: 0;
+  }
+  .facts dt {
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--label);
+  }
+  .facts dd {
+    margin: 2px 0 0;
+    font-size: 26px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+  .hero-map {
+    position: relative;
+    padding: 0;
+    min-height: 460px;
+    overflow: hidden;
+  }
+  .hero-map :global(.contours) {
+    position: absolute;
+    inset: 0;
+  }
+  .station {
+    position: absolute;
+    left: 55%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cross {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--text);
+    border-radius: 50%;
+    background: var(--yellow);
+  }
+  .cross::before,
+  .cross::after {
+    content: '';
+    position: absolute;
+    background: var(--text);
+  }
+  .cross::before {
+    left: -10px;
+    right: -10px;
+    top: 50%;
+    height: 2px;
+    margin-top: -1px;
+  }
+  .cross::after {
+    top: -10px;
+    bottom: -10px;
+    left: 50%;
+    width: 2px;
+    margin-left: -1px;
+  }
+  .tag {
+    font-size: 12px;
+    padding: 4px 8px;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+  }
+  .axis {
+    position: absolute;
+    font-size: 11px;
+    color: var(--label);
+  }
+  .axis-x {
+    left: 16px;
+    top: 14px;
+  }
+  .axis-y {
+    right: 16px;
+    bottom: 26px;
+  }
+  .road {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .places {
+    margin-top: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 32px;
+    padding: 20px 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+  }
+  .places-label {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--label);
+  }
+  .places ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 19px;
+    font-weight: 650;
+  }
+  .places li + li::before {
+    content: '·';
+    margin-left: -20px;
+    margin-right: 12px;
+    color: var(--label);
+  }
+  .values {
+    border-top: 1px solid var(--line-strong);
+  }
+  .value {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 20px;
+  }
+  .n {
+    font-size: 13px;
+    color: var(--label);
+  }
+  .v-title {
+    font-size: 21px;
+    letter-spacing: -0.01em;
+  }
+  .value p {
+    color: var(--text-soft);
+  }
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 21px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--line-strong) 0 10px, transparent 10px 18px);
+  }
+  .steps li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .dot {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--asphalt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 8px;
+    box-shadow: 0 0 0 6px var(--bg);
+  }
+  .steps h3 {
+    font-size: 22px;
+  }
+  .steps p {
+    color: var(--text-soft);
+    max-width: 24em;
+  }
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 32px;
+    padding: 48px;
+  }
+  .story-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  @media (max-width: 960px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      padding-top: 32px;
+    }
+    .hero-map {
+      min-height: 280px;
+    }
+    .story {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 32px 24px;
+    }
+  }
+  @media (max-width: 760px) {
+    .steps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .steps::before {
+      top: 0;
+      bottom: 0;
+      left: 21px;
+      right: auto;
+      width: 2px;
+      height: auto;
+      background: repeating-linear-gradient(180deg, var(--line-strong) 0 10px, transparent 10px 18px);
+    }
+    .steps li {
+      padding-left: 64px;
+    }
+    .dot {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+  @media (max-width: 520px) {
+    .facts div {
+      padding-right: 18px;
+      margin-right: 18px;
+    }
+    .facts dd {
+      font-size: 22px;
+    }
+  }
+</style>

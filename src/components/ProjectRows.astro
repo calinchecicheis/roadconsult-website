@@ -1,0 +1,105 @@
+---
+import { ROUTES, T, type Lang } from '../i18n';
+interface Props {
+  lang: Lang;
+  headingLevel?: 'h2' | 'h3';
+}
+const { lang, headingLevel = 'h3' } = Astro.props;
+const t = T[lang];
+const H = headingLevel;
+---
+
+<ol class="rows">
+  {
+    t.projects.items.map((p, i) => (
+      <li class="row">
+        <span class="idx mono">{String(i + 1).padStart(2, '0')}</span>
+        <span class="place">
+          <strong>{p.place}</strong>
+          <span class="mono county">{p.county}</span>
+        </span>
+        <span class="what">
+          <H class="title">{p.title}</H>
+          <span class="text">{p.text}</span>
+        </span>
+        <a class="tag mono" href={ROUTES[p.service][lang]}>{t.services[p.service].title}</a>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 48px 200px minmax(0, 1fr) auto;
+    gap: 16px 24px;
+    align-items: center;
+    padding: 22px 28px;
+  }
+  .row + .row {
+    border-top: 1px solid var(--line);
+  }
+  .idx {
+    font-size: 13px;
+    color: var(--label);
+  }
+  .place {
+    display: flex;
+    flex-direction: column;
+  }
+  .place strong {
+    font-size: 18px;
+    font-weight: 650;
+  }
+  .county {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--label);
+  }
+  .what {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .title {
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .text {
+    color: var(--text-soft);
+    font-size: 15px;
+  }
+  .tag {
+    font-size: 12px;
+    padding: 6px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .tag:hover {
+    border-color: var(--text);
+  }
+  @media (max-width: 800px) {
+    .row {
+      grid-template-columns: 36px minmax(0, 1fr);
+      padding: 20px;
+    }
+    .what,
+    .tag {
+      grid-column: 2;
+    }
+    .tag {
+      justify-self: start;
+    }
+  }
+</style>

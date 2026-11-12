@@ -1,0 +1,118 @@
+---
+import QuoteForm from './QuoteForm.astro';
+import { SITE, ADDRESS_LINE } from '../config';
+import { T, type Lang, type ServiceKey } from '../i18n';
+interface Props {
+  lang: Lang;
+  preselect?: ServiceKey;
+  headingLevel?: 'h1' | 'h2';
+}
+const { lang, preselect, headingLevel = 'h2' } = Astro.props;
+const t = T[lang];
+const Heading = headingLevel;
+---
+
+<section class="container section" id="contact">
+  <div class="card">
+    <div class="info">
+      <p class="kicker">{t.nav.contact}</p>
+      <Heading class="title">{t.contact.title}</Heading>
+      <p class="sub">{t.contact.lead}</p>
+      <a class="btn btn-yellow btn-lg" href={SITE.whatsapp} target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 21l2.2-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+        {t.cta.whatsapp}
+      </a>
+      <dl class="facts">
+        <div><dt class="mono">{t.contact.phoneLabel}</dt><dd><a href={SITE.whatsapp} target="_blank" rel="noopener">{SITE.phoneDisplay}</a></dd></div>
+        <div><dt class="mono">{t.contact.emailLabel}</dt><dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+        <div><dt class="mono">{t.contact.addressLabel}</dt><dd>{ADDRESS_LINE}</dd></div>
+      </dl>
+    </div>
+    <div class="form-wrap">
+      <QuoteForm lang={lang} preselect={preselect} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .card {
+    background: var(--dark);
+    color: var(--on-dark);
+    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    overflow: hidden;
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 56px 48px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .kicker {
+    margin: 0;
+    color: var(--on-dark-soft);
+  }
+  .title {
+    font-size: clamp(30px, 3.6vw, 42px);
+    color: #ffffff;
+  }
+  .sub {
+    font-size: 18px;
+    color: var(--on-dark-soft);
+  }
+  .facts {
+    margin: 12px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .facts div {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .facts dt {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-dark-soft);
+    padding-top: 3px;
+  }
+  .facts dd {
+    margin: 0;
+    font-weight: 600;
+  }
+  .facts a {
+    color: #ffffff;
+  }
+  .form-wrap {
+    background: var(--surface);
+    color: var(--text);
+    padding: 48px;
+    border: 1px solid var(--line);
+    border-left: 0;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  }
+  @media (max-width: 900px) {
+    .card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .info,
+    .form-wrap {
+      padding: 32px 24px;
+    }
+    .form-wrap {
+      border-left: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+  }
+</style>
