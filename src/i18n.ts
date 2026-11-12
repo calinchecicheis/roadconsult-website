@@ -9,7 +9,7 @@ export const LANG_LABELS: Record<Lang, { short: string; name: string; locale: st
 };
 
 export type ServiceKey = 'survey' | 'planning' | 'consulting';
-export type PageKey = 'home' | 'services' | 'projects' | 'about' | 'contact' | 'thanks' | 'privacy' | ServiceKey;
+export type PageKey = 'home' | 'services' | 'projects' | 'about' | 'contact' | 'thanks' | 'privacy' | 'blog' | ServiceKey;
 
 /** Localized URL for every page, used for links, hreflang and the language switcher.
  *  The Romanian URLs of the old site (/servicii/, /proiecte/, /despre/, /contact/) are kept as they were. */
@@ -36,6 +36,7 @@ export const ROUTES: Record<PageKey, Record<Lang, string>> = {
   contact: { ro: '/contact/', en: '/en/contact/', de: '/de/kontakt/' },
   thanks: { ro: '/multumim/', en: '/en/thank-you/', de: '/de/danke/' },
   privacy: { ro: '/confidentialitate/', en: '/en/privacy/', de: '/de/datenschutz/' },
+  blog: { ro: '/blog/', en: '/en/blog/', de: '/de/blog/' },
 };
 
 export const SERVICE_KEYS: ServiceKey[] = ['survey', 'planning', 'consulting'];
@@ -69,6 +70,7 @@ type Dict = {
     projects: string;
     equipment: string;
     about: string;
+    blog: string;
     contact: string;
     home: string;
     language: string;
@@ -166,6 +168,18 @@ type Dict = {
   privacy: { metaTitle: string; title: string; body: string[] };
   services: Record<ServiceKey, Service>;
   faqTitle: string;
+  blog: {
+    metaTitle: string;
+    metaDescription: string;
+    title: string;
+    lead: string;
+    empty: string;
+    minutes: string;
+    back: string;
+    otherLangs: string;
+    ctaTitle: string;
+    ctaText: string;
+  };
 };
 
 export const T: Record<Lang, Dict> = {
@@ -175,6 +189,7 @@ export const T: Record<Lang, Dict> = {
       projects: 'Proiecte',
       equipment: 'Echipamente',
       about: 'Despre noi',
+      blog: 'Blog',
       contact: 'Contact',
       home: 'Acasă',
       language: 'Limba',
@@ -337,6 +352,19 @@ export const T: Record<Lang, Dict> = {
         'Poți cere oricând accesul, corectarea sau ștergerea datelor tale scriindu-ne la contact@roadconsult.ro.',
       ],
     },
+    blog: {
+      metaTitle: 'Blog | Road Consult, topografie și consultanță drumuri',
+      metaDescription:
+        'Articole practice despre măsurători topografice, proiecte de drumuri, dirigenție de șantier și consultanță tehnică pentru primării și constructori.',
+      title: 'Blog',
+      lead: 'Explicații practice despre topografie, planificarea lucrărilor de drumuri și consultanță tehnică, scrise pentru beneficiari și constructori.',
+      empty: 'Primul articol apare în curând.',
+      minutes: 'min de citit',
+      back: 'Toate articolele',
+      otherLangs: 'Citește și în',
+      ctaTitle: 'Ai un proiect de drum?',
+      ctaText: 'Spune-ne despre lucrare și revenim cu o ofertă.',
+    },
     faqTitle: 'Întrebări frecvente',
     services: {
       survey: {
@@ -417,6 +445,7 @@ export const T: Record<Lang, Dict> = {
       projects: 'Projects',
       equipment: 'Equipment',
       about: 'About',
+      blog: 'Blog',
       contact: 'Contact',
       home: 'Home',
       language: 'Language',
@@ -579,6 +608,19 @@ export const T: Record<Lang, Dict> = {
         'You can ask to access, correct or delete your data at any time by writing to contact@roadconsult.ro.',
       ],
     },
+    blog: {
+      metaTitle: 'Blog | Road Consult, surveying and road consulting',
+      metaDescription:
+        'Practical articles on topographic surveys, road projects, site supervision and technical consulting for municipalities and contractors.',
+      title: 'Blog',
+      lead: 'Practical explanations of surveying, road works planning and technical consulting, written for clients and contractors.',
+      empty: 'The first article is coming soon.',
+      minutes: 'min read',
+      back: 'All articles',
+      otherLangs: 'Also available in',
+      ctaTitle: 'Planning a road project?',
+      ctaText: 'Tell us about the works and we will send you a quote.',
+    },
     faqTitle: 'Frequently asked questions',
     services: {
       survey: {
@@ -659,6 +701,7 @@ export const T: Record<Lang, Dict> = {
       projects: 'Projekte',
       equipment: 'Ausrüstung',
       about: 'Über uns',
+      blog: 'Blog',
       contact: 'Kontakt',
       home: 'Start',
       language: 'Sprache',
@@ -820,6 +863,19 @@ export const T: Record<Lang, Dict> = {
         'Diese Website verwendet keine Tracking-Cookies. Ein einziges funktionales Cookie speichert Ihre Sprachwahl, und Ihr gewähltes Design wird nur in Ihrem Browser gespeichert.',
         'Sie können jederzeit Auskunft, Berichtigung oder Löschung Ihrer Daten verlangen: contact@roadconsult.ro.',
       ],
+    },
+    blog: {
+      metaTitle: 'Blog | Road Consult, Vermessung und Straßenbauberatung',
+      metaDescription:
+        'Praxisartikel zu Vermessung, Straßenbauprojekten, Bauüberwachung und technischer Beratung für Gemeinden und Bauunternehmen.',
+      title: 'Blog',
+      lead: 'Praktische Erklärungen zu Vermessung, Planung von Straßenbauarbeiten und technischer Beratung, für Auftraggeber und Bauunternehmen.',
+      empty: 'Der erste Artikel erscheint in Kürze.',
+      minutes: 'Min. Lesezeit',
+      back: 'Alle Artikel',
+      otherLangs: 'Auch verfügbar auf',
+      ctaTitle: 'Planen Sie ein Straßenbauprojekt?',
+      ctaText: 'Beschreiben Sie uns die Arbeiten, wir senden Ihnen ein Angebot.',
     },
     faqTitle: 'Häufige Fragen',
     services: {

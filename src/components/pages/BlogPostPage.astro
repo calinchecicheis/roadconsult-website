@@ -1,0 +1,182 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../PageHero.astro';
+import ContactCard from '../ContactCard.astro';
+import { SITE } from '../../config';
+import { T, ROUTES, LANG_LABELS, type Lang } from '../../i18n';
+import { type Post, postLang, postPath, translationsOf, readingMinutes, formatDate } from '../../lib/blog';
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const lang = postLang(post);
+const t = T[lang];
+const { Content } = await render(post);
+const path = postPath(post);
+const translations = await translationsOf(post);
+const others = (Object.entries(translations) as [Lang, string][]).filter(([l]) => l !== lang);
+const url = new URL(path, SITE.url).href;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.date.toISOString(),
+    dateModified: (post.data.updated ?? post.data.date).toISOString(),
+    inLanguage: lang,
+    mainEntityOfPage: url,
+    image: new URL('/og-image.png', SITE.url).href,
+    author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    publisher: { '@id': `${SITE.url}/#business` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: SITE.name, item: new URL(ROUTES.home[lang], SITE.url).href },
+      { '@type': 'ListItem', position: 2, name: t.blog.title, item: new URL(ROUTES.blog[lang], SITE.url).href },
+      { '@type': 'ListItem', position: 3, name: post.data.title, item: url },
+    ],
+  },
+];
+---
+
+<Layout
+  lang={lang}
+  page="blog"
+  path={path}
+  alternates={translations}
+  ogType="article"
+  title={`${post.data.title} | ${SITE.name}`}
+  description={post.data.description}
+  jsonLd={jsonLd}
+>
+  <PageHero
+    lang={lang}
+    kicker={`${formatDate(post.data.date, lang)}, ${readingMinutes(post.body)} ${t.blog.minutes}`}
+    title={post.data.title}
+    lead={post.data.description}
+    crumbs={[{ label: t.nav.blog, href: ROUTES.blog[lang] }, { label: post.data.title }]}
+  />
+
+  <article class="container">
+    <div class="panel body">
+      <div class="prose">
+        <Content />
+      </div>
+      <div class="foot">
+        <a href={ROUTES.blog[lang]} class="more">{t.blog.back}</a>
+        {
+          others.length > 0 && (
+            <p class="langs">
+              {t.blog.otherLangs}{' '}
+              {others.map(([l, href], i) => (
+                <>
+                  {i > 0 && ', '}
+                  <a href={href} hreflang={l} lang={l}>
+                    {LANG_LABELS[l].name}
+                  </a>
+                </>
+              ))}
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </article>
+
+  <ContactCard lang={lang} preselect={post.data.service} />
+</Layout>
+
+<style>
+  .body {
+    margin-top: 16px;
+    padding: 56px 64px 48px;
+  }
+  .prose {
+    max-width: 40em;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-soft);
+  }
+  .prose :global(> * + *) {
+    margin-top: 1.1em;
+  }
+  .prose :global(h2) {
+    font-size: 27px;
+    line-height: 1.2;
+    color: var(--text);
+    margin-top: 1.8em;
+  }
+  .prose :global(h2::before) {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 4px;
+    background: var(--yellow);
+    margin-bottom: 14px;
+  }
+  .prose :global(h3) {
+    font-size: 21px;
+    line-height: 1.3;
+    color: var(--text);
+    margin-top: 1.5em;
+  }
+  .prose :global(strong) {
+    color: var(--text);
+  }
+  .prose :global(a) {
+    text-decoration-color: var(--yellow);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.3em;
+  }
+  .prose :global(li + li) {
+    margin-top: 0.4em;
+  }
+  .prose :global(blockquote) {
+    margin-left: 0;
+    padding-left: 20px;
+    border-left: 4px solid var(--yellow);
+    color: var(--text);
+  }
+  .prose :global(table) {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 16px;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 8px;
+    text-align: left;
+  }
+  .foot {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 32px;
+    max-width: 40em;
+  }
+  .langs {
+    font-size: 15px;
+    color: var(--text-soft);
+  }
+  @media (max-width: 720px) {
+    .body {
+      padding: 32px 24px;
+    }
+    .prose {
+      font-size: 17px;
+    }
+  }
+</style>

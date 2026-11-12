@@ -29,6 +29,7 @@ const redirect = new URL(ROUTES.thanks[lang], SITE.url).href;
         {SERVICE_KEYS.map((k) => <a href={ROUTES[k][lang]}>{t.services[k].title}</a>)}
         <a href={ROUTES.projects[lang]}>{t.nav.projects}</a>
         <a href={ROUTES.about[lang]}>{t.nav.about}</a>
+        <a href={ROUTES.blog[lang]}>{t.nav.blog}</a>
       </div>
       <div class="col">
         <p class="h">{t.footer.contact}</p>
