@@ -1,0 +1,140 @@
+---
+// Horizontal, swipeable photo strip (CSS scroll-snap) with prev/next buttons.
+// Tapping a photo opens it in the shared lightbox (Lightbox.astro, rendered once by the layout).
+export type Photo = { src: string; sm: string; w: number; h: number; sw: number; sh: number };
+interface Props {
+  photos: Photo[];
+  alt: string;
+  label: string;
+  prev: string;
+  next: string;
+  countLabel: string;
+  eager?: boolean;
+}
+const { photos, alt, label, prev, next, countLabel, eager = false } = Astro.props;
+---
+
+{
+  photos.length > 0 && (
+    <div class="carousel" data-carousel>
+      <div class="track" role="region" aria-label={label} tabindex="0">
+        {photos.map((p, i) => (
+          <button type="button" class="slide" data-full={p.src} data-w={p.w} data-h={p.h} aria-label={`${alt} (${i + 1}/${photos.length})`}>
+            <img
+              src={p.sm}
+              width={p.sw}
+              height={p.sh}
+              alt={`${alt} (${i + 1}/${photos.length})`}
+              loading={eager && i < 2 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </button>
+        ))}
+      </div>
+      <div class="controls">
+        <span class="count mono">
+          {photos.length} {countLabel}
+        </span>
+        <span class="buttons">
+          <button type="button" class="nav" data-prev aria-label={prev}>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+          </button>
+          <button type="button" class="nav" data-next aria-label={next}>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+          </button>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .track {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    border-radius: var(--radius);
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+  .slide {
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: var(--surface-alt);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: zoom-in;
+    scroll-snap-align: start;
+    height: 240px;
+  }
+  .slide img {
+    height: 100%;
+    width: auto;
+    max-width: none;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+  .slide:hover img {
+    transform: scale(1.03);
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .count {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--label);
+  }
+  .buttons {
+    display: flex;
+    gap: 8px;
+  }
+  .nav {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+  }
+  .nav:hover {
+    border-color: var(--text);
+  }
+  .nav:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  @media (max-width: 640px) {
+    .slide {
+      height: 200px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      scroll-behavior: auto;
+    }
+    .slide img {
+      transition: none;
+    }
+  }
+</style>

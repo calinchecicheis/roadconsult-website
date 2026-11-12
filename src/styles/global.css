@@ -1,0 +1,309 @@
+/* Design A, "Survey grid": clean white, faint survey grid and contour lines,
+   asphalt ink and road-marking yellow. Yellow is only used as a fill behind dark text,
+   never as text on white, so contrast stays high in both themes. */
+:root {
+  --asphalt: #15191d;
+  --asphalt-2: #1d2329;
+  --yellow: #ffc20e;
+  --yellow-hover: #ffd24d;
+  --white: #ffffff;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --container: 1200px;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  color-scheme: light;
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --surface-alt: #f1f2ee;
+  --text: #15191d;
+  --text-soft: #4a545e;
+  --label: #5d6872;
+  --line: #dfe2dc;
+  --line-strong: #c4c9c1;
+  --grid: rgba(21, 25, 29, 0.045);
+  --contour: rgba(21, 25, 29, 0.13);
+  --contour-strong: rgba(21, 25, 29, 0.28);
+  --dark: #15191d;
+  --on-dark: #eceee9;
+  --on-dark-soft: #a3adb6;
+  --strong-bg: #15191d;
+  --strong-text: #ffffff;
+  --strong-hover: #2b333b;
+  --header-bg: rgba(250, 250, 248, 0.9);
+  --shadow: 0 1px 2px rgba(21, 25, 29, 0.06), 0 10px 30px rgba(21, 25, 29, 0.08);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0e1114;
+  --surface: #151a1f;
+  --surface-alt: #1b2128;
+  --text: #eceee9;
+  --text-soft: #a3adb6;
+  --label: #8e99a3;
+  --line: #262e36;
+  --line-strong: #36404a;
+  --grid: rgba(236, 238, 233, 0.04);
+  --contour: rgba(236, 238, 233, 0.1);
+  --contour-strong: rgba(255, 194, 14, 0.35);
+  --dark: #1b2128;
+  --strong-bg: #eceee9;
+  --strong-text: #0e1114;
+  --strong-hover: #ffffff;
+  --header-bg: rgba(14, 17, 20, 0.88);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--text);
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+}
+
+p {
+  margin: 0;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding-top: 112px;
+}
+
+/* Section heading with a surveyor-style index label: "01 — Servicii" */
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--label);
+  margin-bottom: 16px;
+}
+.kicker::before {
+  content: '';
+  width: 28px;
+  height: 4px;
+  background: var(--yellow);
+}
+.section-title {
+  font-size: clamp(30px, 3.6vw, 44px);
+  max-width: 18em;
+}
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 40px;
+  margin-bottom: 40px;
+}
+.section-head .lead {
+  max-width: 30em;
+}
+
+.lead {
+  font-size: 19px;
+  color: var(--text-soft);
+  max-width: 36em;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-weight: 500;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 13px 24px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.btn-yellow {
+  background: var(--yellow);
+  color: var(--asphalt);
+}
+.btn-yellow:hover {
+  background: var(--yellow-hover);
+  color: var(--asphalt);
+}
+.btn-dark {
+  background: var(--strong-bg);
+  color: var(--strong-text);
+}
+.btn-dark:hover {
+  background: var(--strong-hover);
+  color: var(--strong-text);
+}
+.btn-line {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+.btn-line:hover {
+  border-color: var(--text);
+}
+.btn-lg {
+  font-size: 17px;
+  padding: 15px 26px;
+}
+
+/* Panels: thin-ruled boxes like a drawing sheet */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* A link that reads as a "see more" with a yellow underline */
+.more {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 3px;
+  text-decoration-color: var(--yellow);
+}
+
+/* Dashed road centre line used as a divider */
+.roadline {
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--yellow) 0 36px, transparent 36px 64px);
+}
+
+@media (max-width: 960px) {
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .panel {
+    padding: 24px;
+  }
+  .section {
+    padding-top: 72px;
+  }
+}
+
+/* Forms */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.field input,
+.field select,
+.field textarea {
+  font: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 13px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  width: 100%;
+}
+.field textarea {
+  resize: vertical;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .btn {
+    transition: none;
+  }
+}

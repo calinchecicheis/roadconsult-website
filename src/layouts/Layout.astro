@@ -1,0 +1,104 @@
+---
+import '@fontsource-variable/ibm-plex-sans';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { LANGS, LANG_LABELS, ROUTES, DEFAULT_LANG, T, type Lang, type PageKey } from '../i18n';
+import { SITE } from '../config';
+
+interface Props {
+  lang: Lang;
+  page: PageKey;
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  jsonLd?: object[];
+}
+
+const { lang, page, title, description = SITE.description, noindex = false, jsonLd = [] } = Astro.props;
+const canonical = new URL(ROUTES[page][lang], SITE.url).href;
+const ogImage = new URL('/og-image.png', SITE.url).href;
+
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}/#business`,
+  name: SITE.name,
+  legalName: SITE.legalName,
+  description: T[lang].footer.tagline,
+  url: SITE.url,
+  email: SITE.email,
+  telephone: SITE.phoneIntl,
+  image: ogImage,
+  logo: new URL('/apple-touch-icon.png', SITE.url).href,
+  foundingDate: SITE.founded,
+  taxID: SITE.cui,
+  address: {
+    '@type': 'PostalAddress',
+    ...(SITE.address.street ? { streetAddress: SITE.address.street } : {}),
+    addressLocality: SITE.address.city,
+    postalCode: SITE.address.postalCode,
+    addressRegion: SITE.address.region,
+    addressCountry: SITE.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
+  areaServed: ['Bihor', 'Arad', 'Timiș'].map((name) => ({ '@type': 'AdministrativeArea', name })),
+  sameAs: [SITE.facebook, SITE.linkedin],
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {
+      !noindex &&
+        LANGS.map((l) => (
+          <link rel="alternate" hreflang={l} href={new URL(ROUTES[page][l], SITE.url).href} />
+        ))
+    }
+    {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(ROUTES[page][DEFAULT_LANG], SITE.url).href} />}
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1114" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      // Apply the saved theme (or the device setting) before first paint, so there is no flash.
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem('theme'); } catch (e) {}
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={LANG_LABELS[lang].locale} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify([business, ...jsonLd])} />
+  </head>
+  <body>
+    <a class="sr-only" href="#main">Skip to content</a>
+    <Header lang={lang} page={page} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <WhatsAppButton lang={lang} />
+    <Lightbox lang={lang} />
+  </body>
+</html>

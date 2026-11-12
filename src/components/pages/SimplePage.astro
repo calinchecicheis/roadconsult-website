@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { SITE } from '../../config';
+import { ROUTES, T, type Lang } from '../../i18n';
+interface Props {
+  lang: Lang;
+  kind: 'thanks' | 'privacy';
+}
+const { lang, kind } = Astro.props;
+const t = T[lang];
+---
+
+{
+  kind === 'thanks' ? (
+    <Layout lang={lang} page="thanks" title={t.thanks.metaTitle} noindex>
+      <section class="container">
+        <div class="panel box">
+          <h1>{t.thanks.title}</h1>
+          <p class="lead">{t.thanks.text}</p>
+          <div class="ctas">
+            <a href={ROUTES.home[lang]} class="btn btn-dark btn-lg">
+              {t.thanks.back}
+            </a>
+            <a href={SITE.whatsapp} target="_blank" rel="noopener" class="btn btn-line btn-lg">
+              {t.cta.whatsapp}
+            </a>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  ) : (
+    <Layout lang={lang} page="privacy" title={t.privacy.metaTitle}>
+      <section class="container">
+        <div class="panel box">
+          <h1>{t.privacy.title}</h1>
+          {t.privacy.body.map((p) => (
+            <p class="para">{p}</p>
+          ))}
+        </div>
+      </section>
+    </Layout>
+  )
+}
+
+<style>
+  .box {
+    margin-top: 24px;
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 50vh;
+  }
+  h1 {
+    font-size: clamp(32px, 4vw, 48px);
+  }
+  .para {
+    max-width: 48em;
+    color: var(--text-soft);
+    font-size: 17px;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  @media (max-width: 900px) {
+    .box {
+      padding: 36px 24px;
+    }
+  }
+</style>

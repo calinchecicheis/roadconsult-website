@@ -1,0 +1,22 @@
+---
+// The Road Consult logo (compass, road and wordmark), drawn as a CSS mask so it takes the
+// text color and works in both light and dark themes.
+interface Props {
+  height?: number;
+}
+const { height = 34 } = Astro.props;
+---
+
+<span class="logo" style={`--h:${height}px`} role="img" aria-label="Road Consult"></span>
+
+<style>
+  .logo {
+    display: block;
+    height: var(--h);
+    aspect-ratio: 425 / 80;
+    background: currentColor;
+    color: var(--text);
+    -webkit-mask: url('/logo.webp') left center / contain no-repeat;
+    mask: url('/logo.webp') left center / contain no-repeat;
+  }
+</style>

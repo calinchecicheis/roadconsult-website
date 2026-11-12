@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../PageHero.astro';
+import Equipment from '../Equipment.astro';
+import ContactCard from '../ContactCard.astro';
+import { SITE, ADDRESS_LINE } from '../../config';
+import { ROUTES, T, type Lang } from '../../i18n';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = T[lang];
+const a = t.about;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    url: new URL(ROUTES.about[lang], SITE.url).href,
+    about: { '@id': `${SITE.url}/#business` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: SITE.name, item: new URL(ROUTES.home[lang], SITE.url).href },
+      { '@type': 'ListItem', position: 2, name: t.nav.about, item: new URL(ROUTES.about[lang], SITE.url).href },
+    ],
+  },
+];
+const company = [
+  { k: a.legalName, v: SITE.legalName },
+  { k: a.cui, v: SITE.cui },
+  { k: a.reg, v: SITE.reg },
+  { k: a.caen, v: `${SITE.caen} · ${a.caenText}` },
+  { k: a.founded, v: SITE.founded },
+  { k: a.seat, v: ADDRESS_LINE },
+];
+---
+
+<Layout lang={lang} page="about" title={a.metaTitle} description={a.metaDescription} jsonLd={jsonLd}>
+  <PageHero lang={lang} kicker={t.nav.about} title={a.title} lead={a.story[0]} crumbs={[{ label: t.nav.about }]} />
+
+  <section class="container section first">
+    <div class="split">
+      <div class="panel">
+        <p class="lead">{a.story[1]}</p>
+      </div>
+      <div class="panel">
+        <h2 class="h">{a.companyTitle}</h2>
+        <dl class="company">
+          {
+            company.map((c) => (
+              <div>
+                <dt class="mono">{c.k}</dt>
+                <dd>{c.v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section">
+    <p class="kicker">{a.valuesTitle}</p>
+    <div class="grid-4 values">
+      {
+        a.values.map((v, i) => (
+          <div class="value">
+            <span class="mono n">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{v.title}</h3>
+            <p>{v.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="section-head">
+      <div>
+        <p class="kicker">{t.nav.equipment}</p>
+        <h2 class="section-title">{t.home.equipmentTitle}</h2>
+      </div>
+      <p class="lead">{t.home.equipmentLead}</p>
+    </div>
+    <Equipment lang={lang} />
+  </section>
+
+  <ContactCard lang={lang} />
+</Layout>
+
+<style>
+  .first {
+    padding-top: 24px;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+  }
+  .h {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .company {
+    margin: 0;
+  }
+  .company div {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+  }
+  .company dt {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--label);
+    padding-top: 3px;
+  }
+  .company dd {
+    margin: 0;
+    font-weight: 500;
+  }
+  .values {
+    border-top: 1px solid var(--line-strong);
+  }
+  .value {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 20px;
+  }
+  .n {
+    font-size: 13px;
+    color: var(--label);
+  }
+  .value h3 {
+    font-size: 21px;
+  }
+  .value p {
+    color: var(--text-soft);
+  }
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .company div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2px;
+    }
+  }
+</style>

@@ -1,0 +1,17 @@
+# Old WordPress URLs. /servicii/, /proiecte/, /despre/ and /contact/ keep the same address on the new site,
+# so only WordPress-specific URLs need redirecting.
+/wp-sitemap.xml /sitemap-index.xml 301
+/wp-sitemap-posts-page-1.xml /sitemap-index.xml 301
+/wp-sitemap-users-1.xml /sitemap-index.xml 301
+/sitemap.xml /sitemap-index.xml 301
+/sitemap_index.xml /sitemap-index.xml 301
+/page-sitemap.xml /sitemap-index.xml 301
+/feed / 301
+/feed/ / 301
+/comments/feed/ / 301
+/author/* / 301
+/category/* / 301
+/hello-world/ / 301
+/sample-page/ / 301
+/wp-login.php / 301
+/wp-admin/* / 301

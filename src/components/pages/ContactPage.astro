@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContactCard from '../ContactCard.astro';
+import { SITE } from '../../config';
+import { ROUTES, T, type Lang } from '../../i18n';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = T[lang];
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    url: new URL(ROUTES.contact[lang], SITE.url).href,
+    about: { '@id': `${SITE.url}/#business` },
+  },
+];
+---
+
+<Layout lang={lang} page="contact" title={t.contact.metaTitle} description={t.contact.metaDescription} jsonLd={jsonLd}>
+  <div class="wrap"><ContactCard lang={lang} headingLevel="h1" /></div>
+</Layout>
+
+<style>
+  .wrap :global(.section) {
+    padding-top: 24px;
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import { EQUIPMENT, T, type Lang } from '../i18n';
+interface Props {
+  lang: Lang;
+}
+const t = T[Astro.props.lang];
+---
+
+<div class="grid-3">
+  {
+    EQUIPMENT.map((e) => (
+      <article class="panel item">
+        <svg class="icon" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          {e.key === 'ts' && <g><rect x="22" y="8" width="20" height="18" rx="2" /><circle cx="32" cy="17" r="4" /><path d="M26 26h12" /></g>}
+          {e.key === 'gnss' && <g><path d="M22 20a10 6 0 0 1 20 0z" /><path d="M32 20v8" /><path d="M18 10a18 14 0 0 1 28 0" stroke-dasharray="2 4" /></g>}
+          {e.key === 'level' && <g><rect x="16" y="16" width="32" height="10" rx="2" /><circle cx="22" cy="21" r="2" /><path d="M44 21h4" /></g>}
+          <path d="M32 28v6M32 34 18 58M32 34l14 24M32 34v24" />
+        </svg>
+        <p class="kind mono">{t.equipment[e.key].kind}</p>
+        <h3>{e.name}</h3>
+        <p class="text">{t.equipment[e.key].text}</p>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .kind {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--label);
+  }
+  h3 {
+    font-size: 20px;
+  }
+  .text {
+    color: var(--text-soft);
+  }
+</style>

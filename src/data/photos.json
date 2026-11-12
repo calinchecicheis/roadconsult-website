@@ -1,0 +1,580 @@
+{
+ "dumbravita-reparatii": [
+  {
+   "src": "/projects/dumbravita-reparatii/01.webp",
+   "sm": "/projects/dumbravita-reparatii/01-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/02.webp",
+   "sm": "/projects/dumbravita-reparatii/02-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/03.webp",
+   "sm": "/projects/dumbravita-reparatii/03-sm.webp",
+   "w": 736,
+   "h": 1600,
+   "sw": 331,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/04.webp",
+   "sm": "/projects/dumbravita-reparatii/04-sm.webp",
+   "w": 900,
+   "h": 1600,
+   "sw": 405,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/05.webp",
+   "sm": "/projects/dumbravita-reparatii/05-sm.webp",
+   "w": 900,
+   "h": 1600,
+   "sw": 405,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/06.webp",
+   "sm": "/projects/dumbravita-reparatii/06-sm.webp",
+   "w": 720,
+   "h": 1600,
+   "sw": 324,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/07.webp",
+   "sm": "/projects/dumbravita-reparatii/07-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/08.webp",
+   "sm": "/projects/dumbravita-reparatii/08-sm.webp",
+   "w": 720,
+   "h": 1600,
+   "sw": 324,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/09.webp",
+   "sm": "/projects/dumbravita-reparatii/09-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/10.webp",
+   "sm": "/projects/dumbravita-reparatii/10-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/11.webp",
+   "sm": "/projects/dumbravita-reparatii/11-sm.webp",
+   "w": 899,
+   "h": 1599,
+   "sw": 405,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/12.webp",
+   "sm": "/projects/dumbravita-reparatii/12-sm.webp",
+   "w": 899,
+   "h": 1599,
+   "sw": 405,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/13.webp",
+   "sm": "/projects/dumbravita-reparatii/13-sm.webp",
+   "w": 720,
+   "h": 1599,
+   "sw": 324,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/14.webp",
+   "sm": "/projects/dumbravita-reparatii/14-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/15.webp",
+   "sm": "/projects/dumbravita-reparatii/15-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/16.webp",
+   "sm": "/projects/dumbravita-reparatii/16-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/17.webp",
+   "sm": "/projects/dumbravita-reparatii/17-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/18.webp",
+   "sm": "/projects/dumbravita-reparatii/18-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-reparatii/19.webp",
+   "sm": "/projects/dumbravita-reparatii/19-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  }
+ ],
+ "saravale": [
+  {
+   "src": "/projects/saravale/01.webp",
+   "sm": "/projects/saravale/01-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/02.webp",
+   "sm": "/projects/saravale/02-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/03.webp",
+   "sm": "/projects/saravale/03-sm.webp",
+   "w": 432,
+   "h": 960,
+   "sw": 324,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/04.webp",
+   "sm": "/projects/saravale/04-sm.webp",
+   "w": 432,
+   "h": 960,
+   "sw": 324,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/05.webp",
+   "sm": "/projects/saravale/05-sm.webp",
+   "w": 432,
+   "h": 960,
+   "sw": 324,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/06.webp",
+   "sm": "/projects/saravale/06-sm.webp",
+   "w": 432,
+   "h": 960,
+   "sw": 324,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/07.webp",
+   "sm": "/projects/saravale/07-sm.webp",
+   "w": 1197,
+   "h": 1600,
+   "sw": 539,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/08.webp",
+   "sm": "/projects/saravale/08-sm.webp",
+   "w": 1197,
+   "h": 1600,
+   "sw": 539,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/09.webp",
+   "sm": "/projects/saravale/09-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/10.webp",
+   "sm": "/projects/saravale/10-sm.webp",
+   "w": 1600,
+   "h": 720,
+   "sw": 720,
+   "sh": 324
+  },
+  {
+   "src": "/projects/saravale/11.webp",
+   "sm": "/projects/saravale/11-sm.webp",
+   "w": 1600,
+   "h": 720,
+   "sw": 720,
+   "sh": 324
+  },
+  {
+   "src": "/projects/saravale/12.webp",
+   "sm": "/projects/saravale/12-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/13.webp",
+   "sm": "/projects/saravale/13-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/14.webp",
+   "sm": "/projects/saravale/14-sm.webp",
+   "w": 900,
+   "h": 1600,
+   "sw": 405,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/15.webp",
+   "sm": "/projects/saravale/15-sm.webp",
+   "w": 900,
+   "h": 1600,
+   "sw": 405,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/16.webp",
+   "sm": "/projects/saravale/16-sm.webp",
+   "w": 899,
+   "h": 1599,
+   "sw": 405,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/17.webp",
+   "sm": "/projects/saravale/17-sm.webp",
+   "w": 899,
+   "h": 1599,
+   "sw": 405,
+   "sh": 720
+  },
+  {
+   "src": "/projects/saravale/18.webp",
+   "sm": "/projects/saravale/18-sm.webp",
+   "w": 737,
+   "h": 1600,
+   "sw": 332,
+   "sh": 720
+  }
+ ],
+ "biled": [
+  {
+   "src": "/projects/biled/01.webp",
+   "sm": "/projects/biled/01-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/02.webp",
+   "sm": "/projects/biled/02-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/03.webp",
+   "sm": "/projects/biled/03-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/04.webp",
+   "sm": "/projects/biled/04-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/05.webp",
+   "sm": "/projects/biled/05-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/06.webp",
+   "sm": "/projects/biled/06-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/07.webp",
+   "sm": "/projects/biled/07-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/08.webp",
+   "sm": "/projects/biled/08-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/09.webp",
+   "sm": "/projects/biled/09-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/10.webp",
+   "sm": "/projects/biled/10-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/11.webp",
+   "sm": "/projects/biled/11-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/12.webp",
+   "sm": "/projects/biled/12-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/13.webp",
+   "sm": "/projects/biled/13-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/14.webp",
+   "sm": "/projects/biled/14-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  },
+  {
+   "src": "/projects/biled/15.webp",
+   "sm": "/projects/biled/15-sm.webp",
+   "w": 768,
+   "h": 1024,
+   "sw": 540,
+   "sh": 720
+  }
+ ],
+ "arad": [
+  {
+   "src": "/projects/arad/01.webp",
+   "sm": "/projects/arad/01-sm.webp",
+   "w": 473,
+   "h": 824,
+   "sw": 413,
+   "sh": 720
+  },
+  {
+   "src": "/projects/arad/02.webp",
+   "sm": "/projects/arad/02-sm.webp",
+   "w": 473,
+   "h": 824,
+   "sw": 413,
+   "sh": 720
+  },
+  {
+   "src": "/projects/arad/03.webp",
+   "sm": "/projects/arad/03-sm.webp",
+   "w": 1200,
+   "h": 824,
+   "sw": 720,
+   "sh": 494
+  },
+  {
+   "src": "/projects/arad/04.webp",
+   "sm": "/projects/arad/04-sm.webp",
+   "w": 1200,
+   "h": 824,
+   "sw": 720,
+   "sh": 494
+  },
+  {
+   "src": "/projects/arad/05.webp",
+   "sm": "/projects/arad/05-sm.webp",
+   "w": 1200,
+   "h": 824,
+   "sw": 720,
+   "sh": 494
+  },
+  {
+   "src": "/projects/arad/06.webp",
+   "sm": "/projects/arad/06-sm.webp",
+   "w": 736,
+   "h": 824,
+   "sw": 643,
+   "sh": 720
+  },
+  {
+   "src": "/projects/arad/07.webp",
+   "sm": "/projects/arad/07-sm.webp",
+   "w": 736,
+   "h": 824,
+   "sw": 643,
+   "sh": 720
+  },
+  {
+   "src": "/projects/arad/08.webp",
+   "sm": "/projects/arad/08-sm.webp",
+   "w": 473,
+   "h": 824,
+   "sw": 413,
+   "sh": 720
+  }
+ ],
+ "dumbravita-modernizare": [
+  {
+   "src": "/projects/dumbravita-modernizare/01.webp",
+   "sm": "/projects/dumbravita-modernizare/01-sm.webp",
+   "w": 768,
+   "h": 888,
+   "sw": 623,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/02.webp",
+   "sm": "/projects/dumbravita-modernizare/02-sm.webp",
+   "w": 768,
+   "h": 888,
+   "sw": 623,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/03.webp",
+   "sm": "/projects/dumbravita-modernizare/03-sm.webp",
+   "w": 1200,
+   "h": 888,
+   "sw": 720,
+   "sh": 533
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/04.webp",
+   "sm": "/projects/dumbravita-modernizare/04-sm.webp",
+   "w": 1200,
+   "h": 888,
+   "sw": 720,
+   "sh": 533
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/05.webp",
+   "sm": "/projects/dumbravita-modernizare/05-sm.webp",
+   "w": 768,
+   "h": 888,
+   "sw": 623,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/06.webp",
+   "sm": "/projects/dumbravita-modernizare/06-sm.webp",
+   "w": 768,
+   "h": 888,
+   "sw": 623,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/07.webp",
+   "sm": "/projects/dumbravita-modernizare/07-sm.webp",
+   "w": 768,
+   "h": 888,
+   "sw": 623,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/08.webp",
+   "sm": "/projects/dumbravita-modernizare/08-sm.webp",
+   "w": 768,
+   "h": 888,
+   "sw": 623,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/09.webp",
+   "sm": "/projects/dumbravita-modernizare/09-sm.webp",
+   "w": 768,
+   "h": 888,
+   "sw": 623,
+   "sh": 720
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/10.webp",
+   "sm": "/projects/dumbravita-modernizare/10-sm.webp",
+   "w": 1200,
+   "h": 888,
+   "sw": 720,
+   "sh": 533
+  },
+  {
+   "src": "/projects/dumbravita-modernizare/11.webp",
+   "sm": "/projects/dumbravita-modernizare/11-sm.webp",
+   "w": 768,
+   "h": 888,
+   "sw": 623,
+   "sh": 720
+  }
+ ]
+}
