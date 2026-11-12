@@ -31,5 +31,4 @@ Quote and newsletter forms post to [Web3Forms](https://web3forms.com) (free). Cr
 
 ## Still to confirm
 
-- Street address in Marghita (`SITE.address.street` in `src/config.ts`).
 - A higher-resolution logo, and project photos if wanted.

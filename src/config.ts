@@ -13,8 +13,7 @@ export const SITE = {
   caen: '7112',
   founded: '2017',
   address: {
-    // TODO: confirm the street (the old site shows both Str. Tineretului 8 and Str. Eroilor 8).
-    street: '',
+    street: 'Str. Tineretului 8',
     city: 'Marghita',
     postalCode: '415300',
     region: 'Bihor',
