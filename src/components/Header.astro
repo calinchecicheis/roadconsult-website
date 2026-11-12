@@ -5,8 +5,10 @@ import { LANGS, LANG_LABELS, ROUTES, T, type Lang, type PageKey } from '../i18n'
 interface Props {
   lang: Lang;
   page: PageKey;
+  /** Where the language switcher sends the visitor for each language. */
+  links: Record<Lang, string>;
 }
-const { lang, page } = Astro.props;
+const { lang, page, links: switchTo } = Astro.props;
 const t = T[lang];
 const home = ROUTES.home[lang];
 const links = [
@@ -14,6 +16,7 @@ const links = [
   { href: ROUTES.projects[lang], label: t.nav.projects, active: page === 'projects' },
   { href: `${home}#echipamente`, label: t.nav.equipment, active: false },
   { href: ROUTES.about[lang], label: t.nav.about, active: page === 'about' },
+  { href: ROUTES.blog[lang], label: t.nav.blog, active: page === 'blog' },
   { href: ROUTES.contact[lang], label: t.nav.contact, active: page === 'contact' },
 ];
 ---
@@ -40,7 +43,7 @@ const links = [
           {
             LANGS.map((l) => (
               <li>
-                <a href={ROUTES[page][l]} hreflang={l} lang={l} data-lang={l} aria-current={l === lang ? 'true' : undefined}>
+                <a href={switchTo[l]} hreflang={l} lang={l} data-lang={l} aria-current={l === lang ? 'true' : undefined}>
                   {LANG_LABELS[l].name}
                 </a>
               </li>
