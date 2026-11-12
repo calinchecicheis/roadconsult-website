@@ -27,7 +27,7 @@ npm run build    # outputs to dist/
 
 ## Forms
 
-Quote and newsletter forms post to [Web3Forms](https://web3forms.com) (free). Create an access key for contact@roadconsult.ro and put it in `web3formsKey` in `src/config.ts`.
+Quote and newsletter forms post to [Web3Forms](https://web3forms.com) (free). The access key for contact@roadconsult.ro is in `web3formsKey` in `src/config.ts`.
 
 ## Still to confirm
 

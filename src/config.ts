@@ -23,7 +23,7 @@ export const SITE = {
   facebook: 'https://www.facebook.com/roadconsult',
   linkedin: 'https://www.linkedin.com/company/roadconsult',
   // Free key from https://web3forms.com, created for contact@roadconsult.ro. Forms send once this is set.
-  web3formsKey: '',
+  web3formsKey: '194f27fd-26a0-4bf9-a05f-103713bb1be3',
 };
 
 export const ADDRESS_LINE = [SITE.address.street, SITE.address.city, SITE.address.region]
