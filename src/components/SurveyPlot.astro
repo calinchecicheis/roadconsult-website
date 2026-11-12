@@ -1,0 +1,131 @@
+---
+// Schematic plot of where Road Consult works: the Marghita office and the project
+// locations, placed by their real coordinates on a 0.5° grid (equirectangular, x scaled by cos 46°).
+import Contours from './Contours.astro';
+interface Props {
+  label: string;
+  officeLabel: string;
+  twoProjects: string;
+}
+const { label, officeLabel, twoProjects } = Astro.props;
+const X = (lng: number) => (lng - 20.5) * 208.5;
+const Y = (lat: number) => (47.62 - lat) * 300;
+const places = [
+  { name: 'Arad', lat: 46.186, lng: 21.312, href: '#arad', dx: 14, dy: 5, anchor: 'start' },
+  { name: 'Dumbrăvița', lat: 45.797, lng: 21.242, href: '#dumbravita-reparatii', dx: 14, dy: 5, anchor: 'start', note: twoProjects },
+  { name: 'Biled', lat: 45.887, lng: 20.958, href: '#biled', dx: 0, dy: 30, anchor: 'middle' },
+  { name: 'Săravale', lat: 45.983, lng: 20.733, href: '#saravale', dx: 0, dy: -16, anchor: 'start' },
+];
+const office = { lat: 47.35, lng: 22.333 };
+const lats = [47, 46.5, 46];
+const lngs = [21, 21.5, 22];
+---
+
+<figure class="plot" aria-label={label}>
+  <div class="contours-bg" aria-hidden="true"><Contours /></div>
+  <svg viewBox="0 0 440 600" role="img" aria-label={label}>
+    <g class="grid">
+      {lats.map((l) => <line x1="0" x2="440" y1={Y(l)} y2={Y(l)} />)}
+      {lngs.map((l) => <line y1="0" y2="600" x1={X(l)} x2={X(l)} />)}
+    </g>
+    <g class="ticks">
+      {lats.map((l) => <text x="6" y={Y(l) - 6}>{`${l}°N`}</text>)}
+      {lngs.map((l) => <text x={X(l) + 6} y="594">{`${l}°E`}</text>)}
+    </g>
+    <line class="link" x1={X(office.lng)} y1={Y(office.lat)} x2={X(21.312)} y2={Y(46.186)} />
+    <g class="office" transform={`translate(${X(office.lng)} ${Y(office.lat)})`}>
+      <rect x="-9" y="-9" width="18" height="18" />
+      <text x="-16" y="5" text-anchor="end">Marghita</text>
+      <text class="sub" x="-16" y="23" text-anchor="end">{officeLabel}</text>
+    </g>
+    {
+      places.map((p) => (
+        <a href={p.href} class="pin">
+          <circle class="halo" cx={X(p.lng)} cy={Y(p.lat)} r="16" />
+          <circle class="dot" cx={X(p.lng)} cy={Y(p.lat)} r="8" />
+          <text x={X(p.lng) + p.dx} y={Y(p.lat) + p.dy} text-anchor={p.anchor}>
+            {p.name}
+          </text>
+          {p.note && (
+            <text class="sub" x={X(p.lng) + p.dx} y={Y(p.lat) + p.dy + 18} text-anchor={p.anchor}>
+              {p.note}
+            </text>
+          )}
+        </a>
+      ))
+    }
+  </svg>
+</figure>
+
+<style>
+  .plot {
+    position: relative;
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .contours-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+  }
+  svg {
+    position: relative;
+    width: 100%;
+    height: auto;
+    font-family: 'IBM Plex Sans Variable', system-ui, sans-serif;
+  }
+  .grid line {
+    stroke: var(--line-strong);
+    stroke-width: 1;
+    stroke-dasharray: 2 4;
+  }
+  .ticks text {
+    font-family: var(--mono);
+    font-size: 11px;
+    fill: var(--label);
+  }
+  .link {
+    stroke: var(--text);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 6;
+    opacity: 0.35;
+  }
+  .office rect {
+    fill: var(--text);
+  }
+  text {
+    fill: var(--text);
+    font-size: 16px;
+    font-weight: 650;
+  }
+  text.sub {
+    font-size: 12px;
+    font-weight: 400;
+    fill: var(--text-soft);
+  }
+  .pin .dot {
+    fill: var(--yellow);
+    stroke: var(--asphalt);
+    stroke-width: 2.5;
+  }
+  .pin .halo {
+    fill: var(--yellow);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .pin:hover .halo,
+  .pin:focus-visible .halo {
+    opacity: 0.3;
+  }
+  .pin:focus-visible {
+    outline: none;
+  }
+  .pin:hover text:not(.sub) {
+    text-decoration: underline;
+    text-decoration-color: var(--yellow);
+    text-decoration-thickness: 3px;
+  }
+</style>

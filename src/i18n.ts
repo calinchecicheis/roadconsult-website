@@ -118,6 +118,10 @@ type Dict = {
     close: string;
     galleryTitle: string;
     galleryLead: string;
+    seeAll: string;
+    mapLabel: string;
+    office: string;
+    twoProjects: string;
   };
   about: {
     metaTitle: string;
@@ -244,6 +248,10 @@ export const T: Record<Lang, Dict> = {
       close: 'Închide',
       galleryTitle: 'Din teren',
       galleryLead: 'Fotografii de pe șantierele noastre. Apasă pe o fotografie ca s-o vezi mărită.',
+      seeAll: 'Vezi toate cele {n} fotografii',
+      mapLabel: 'Hartă schematică: sediul din Marghita și localitățile proiectelor',
+      office: 'Sediu',
+      twoProjects: '2 proiecte',
       items: [
         { place: 'Dumbrăvița', county: 'Timiș', title: 'Reparații și întreținere străzi', text: 'Execuția lucrărilor de reparații și întreținere a străzilor din comuna Dumbrăvița.', gallery: 'dumbravita-reparatii', service:'planning' },
         { place: 'Săravale', county: 'Timiș', title: 'Asfaltare străzi și accese', text: 'Asfaltarea străzilor și amenajarea acceselor în comuna Săravale.', gallery: 'saravale', service:'survey' },
@@ -482,6 +490,10 @@ export const T: Record<Lang, Dict> = {
       close: 'Close',
       galleryTitle: 'From the field',
       galleryLead: 'Photos from our sites. Tap a photo to see it larger.',
+      seeAll: 'See all {n} photos',
+      mapLabel: 'Schematic map: the Marghita office and the project locations',
+      office: 'Office',
+      twoProjects: '2 projects',
       items: [
         { place: 'Dumbrăvița', county: 'Timiș', title: 'Street repairs and maintenance', text: 'Repair and maintenance works on the streets of Dumbrăvița commune.', gallery: 'dumbravita-reparatii', service:'planning' },
         { place: 'Săravale', county: 'Timiș', title: 'Road asphalting', text: 'Asphalting of streets and building of access ways in Săravale commune.', gallery: 'saravale', service:'survey' },
@@ -720,6 +732,10 @@ export const T: Record<Lang, Dict> = {
       close: 'Schließen',
       galleryTitle: 'Von der Baustelle',
       galleryLead: 'Fotos von unseren Baustellen. Tippen Sie auf ein Foto, um es zu vergrößern.',
+      seeAll: 'Alle {n} Fotos ansehen',
+      mapLabel: 'Schematische Karte: Firmensitz in Marghita und Projektorte',
+      office: 'Firmensitz',
+      twoProjects: '2 Projekte',
       items: [
         { place: 'Dumbrăvița', county: 'Timiș', title: 'Straßenreparatur und -instandhaltung', text: 'Reparatur- und Instandhaltungsarbeiten an den Straßen der Gemeinde Dumbrăvița.', gallery: 'dumbravita-reparatii', service:'planning' },
         { place: 'Săravale', county: 'Timiș', title: 'Asphaltierung von Straßen', text: 'Asphaltierung von Straßen und Bau von Zufahrten in der Gemeinde Săravale.', gallery: 'saravale', service:'survey' },

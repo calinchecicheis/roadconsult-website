@@ -55,9 +55,15 @@ const t = T[Astro.props.lang].projects;
       counter.textContent = `${index + 1} / ${slides.length}`;
     };
     document.addEventListener('click', (e) => {
+      // "See all photos" buttons open their gallery at the first photo.
+      const all = (e.target as HTMLElement).closest<HTMLElement>('[data-open-gallery]');
+      if (all) {
+        all.closest('[data-gallery]')?.querySelector<HTMLButtonElement>('.slide')?.click();
+        return;
+      }
       const slide = (e.target as HTMLElement).closest<HTMLButtonElement>('.slide');
       if (!slide) return;
-      slides = Array.from(slide.closest('[data-carousel]')!.querySelectorAll<HTMLButtonElement>('.slide'));
+      slides = Array.from(slide.closest('[data-carousel],[data-gallery]')!.querySelectorAll<HTMLButtonElement>('.slide'));
       show(slides.indexOf(slide));
       dialog.showModal();
     });

@@ -1,8 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../PageHero.astro';
-import PhotoCarousel, { type Photo } from '../PhotoCarousel.astro';
+import SurveyPlot from '../SurveyPlot.astro';
 import ContactCard from '../ContactCard.astro';
+import { type Photo } from '../PhotoCarousel.astro';
 import PHOTOS from '../../data/photos.json';
 import { SITE } from '../../config';
 import { ROUTES, T, type Lang } from '../../i18n';
@@ -12,6 +12,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = T[lang];
 const photos = PHOTOS as Record<string, Photo[]>;
+const SHOWN = 6;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -25,110 +26,252 @@ const jsonLd = [
 ---
 
 <Layout lang={lang} page="projects" title={t.projects.metaTitle} description={t.projects.metaDescription} jsonLd={jsonLd}>
-  <PageHero lang={lang} kicker={t.nav.projects} title={t.projects.title} lead={t.projects.lead} crumbs={[{ label: t.nav.projects }]} />
-
-  <section class="container section first">
-    <ol class="projects">
-      {
-        t.projects.items.map((p, i) => (
-          <li class="panel project">
-            <div class="head">
-              <span class="idx mono">{String(i + 1).padStart(2, '0')}</span>
-              <div class="what">
-                <p class="where mono">
-                  {p.place} · {p.county}
-                </p>
-                <h2>{p.title}</h2>
-                <p class="text">{p.text}</p>
-              </div>
-              <a class="tag mono" href={ROUTES[p.service][lang]}>
-                {t.services[p.service].title}
+  <section class="container intro">
+    <div class="intro-text">
+      <nav aria-label="Breadcrumb" class="crumbs">
+        <a href={ROUTES.home[lang]}>{t.nav.home}</a> / <span aria-current="page">{t.nav.projects}</span>
+      </nav>
+      <h1>{t.projects.title}</h1>
+      <p class="lead">{t.projects.lead}</p>
+      <ul class="index">
+        {
+          t.projects.items.map((p) => (
+            <li>
+              <a href={`#${p.gallery}`}>
+                <strong>{p.place}</strong>
+                <span>{p.title}</span>
               </a>
-            </div>
-            <PhotoCarousel
-              photos={photos[p.gallery] ?? []}
-              alt={`${p.title}, ${p.place}`}
-              label={`${p.title}, ${p.place}`}
-              prev={t.projects.prev}
-              next={t.projects.next}
-              countLabel={t.projects.photos}
-              eager={i === 0}
-            />
-          </li>
-        ))
-      }
-    </ol>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <SurveyPlot label={t.projects.mapLabel} officeLabel={t.projects.office} twoProjects={t.projects.twoProjects} />
   </section>
+
+  {
+    t.projects.items.map((p, i) => {
+      const list = photos[p.gallery] ?? [];
+      const extra = list.length - SHOWN;
+      return (
+        <section class="container project" id={p.gallery} data-gallery>
+          <div class="about">
+            <p class="place">{p.place}</p>
+            <p class="county">
+              {lang === 'ro' ? 'jud. ' : ''}
+              {p.county}
+            </p>
+            <h2>{p.title}</h2>
+            <p class="text">{p.text}</p>
+            <a class="more" href={ROUTES[p.service][lang]}>
+              {t.services[p.service].title}
+            </a>
+            {list.length > 0 && (
+              <button type="button" class="btn btn-line all" data-open-gallery>
+                {t.projects.seeAll.replace('{n}', String(list.length))}
+              </button>
+            )}
+          </div>
+          <div class="mosaic">
+            {list.map((ph, k) => (
+              <button
+                type="button"
+                class:list={['slide', { lead: k === 0, hidden: k >= SHOWN }]}
+                data-full={ph.src}
+                data-w={ph.w}
+                data-h={ph.h}
+                aria-label={`${p.title}, ${p.place} (${k + 1}/${list.length})`}
+              >
+                {k < SHOWN && (
+                  <img
+                    src={k === 0 ? ph.src : ph.sm}
+                    width={k === 0 ? ph.w : ph.sw}
+                    height={k === 0 ? ph.h : ph.sh}
+                    alt={`${p.title}, ${p.place} (${k + 1}/${list.length})`}
+                    loading={i === 0 && k < 3 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                )}
+                {k === SHOWN - 1 && extra > 0 && <span class="extra">+{extra}</span>}
+              </button>
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
 
   <ContactCard lang={lang} />
 </Layout>
 
 <style>
-  .first {
-    padding-top: 24px;
-  }
-  .projects {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .project {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  .head {
+  .intro {
     display: grid;
-    grid-template-columns: 40px minmax(0, 1fr) auto;
-    gap: 16px 24px;
-    align-items: start;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 56px;
+    align-items: center;
+    padding-top: 56px;
   }
-  .idx {
-    font-size: 13px;
-    color: var(--label);
-    padding-top: 2px;
-  }
-  .what {
+  .intro-text {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 20px;
   }
-  .where {
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+  .crumbs {
+    font-size: 14px;
     color: var(--label);
+  }
+  .crumbs a {
+    color: var(--label);
+  }
+  h1 {
+    font-size: clamp(40px, 5.4vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+  .index {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .index a {
+    display: grid;
+    grid-template-columns: 9em minmax(0, 1fr);
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+  }
+  .index a:hover strong {
+    box-shadow: inset 0 -4px 0 var(--yellow);
+  }
+  .index span {
+    color: var(--text-soft);
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 48px;
+    align-items: start;
+    margin-top: 96px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line-strong);
+    scroll-margin-top: 80px;
+  }
+  .about {
+    position: sticky;
+    top: 104px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .place {
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 650;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .county {
+    color: var(--label);
+    margin-bottom: 14px;
   }
   h2 {
-    font-size: 24px;
+    font-size: 22px;
+    letter-spacing: -0.01em;
   }
   .text {
     color: var(--text-soft);
-    max-width: 48em;
   }
-  .tag {
-    font-size: 12px;
-    padding: 6px 10px;
-    border: 1px solid var(--line-strong);
+  .more {
+    margin-top: 6px;
+  }
+  .all {
+    margin-top: 16px;
+  }
+
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 200px;
+    gap: 8px;
+  }
+  .slide {
+    position: relative;
+    padding: 0;
+    border: 0;
+    background: var(--surface-alt);
     border-radius: var(--radius);
-    text-decoration: none;
-    white-space: nowrap;
+    overflow: hidden;
+    cursor: zoom-in;
   }
-  .tag:hover {
-    border-color: var(--text);
+  .slide.lead {
+    grid-column: span 2;
+    grid-row: span 2;
   }
-  @media (max-width: 760px) {
-    .head {
+  .slide.hidden {
+    display: none;
+  }
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .slide:hover img {
+    transform: scale(1.04);
+  }
+  .extra {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(21, 25, 29, 0.6);
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 650;
+  }
+
+  @media (max-width: 960px) {
+    .intro {
       grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+      padding-top: 32px;
     }
-    .idx {
-      display: none;
+    .intro :global(.plot) {
+      max-width: 440px;
     }
-    .tag {
-      justify-self: start;
+    .project {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+    .about {
+      position: static;
+    }
+  }
+  @media (max-width: 640px) {
+    .index a {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    .mosaic {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: 150px;
+    }
+    .slide.lead {
+      grid-row: span 2;
+    }
+    .slide:nth-child(n + 6):not(.hidden) .extra {
+      font-size: 24px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slide img {
+      transition: none;
     }
   }
 </style>
