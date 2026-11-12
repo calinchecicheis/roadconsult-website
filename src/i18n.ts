@@ -111,7 +111,13 @@ type Dict = {
     metaDescription: string;
     title: string;
     lead: string;
-    items: { place: string; county: string; title: string; text: string; service: ServiceKey }[];
+    items: { place: string; county: string; title: string; text: string; gallery: string; service: ServiceKey }[];
+    photos: string;
+    prev: string;
+    next: string;
+    close: string;
+    galleryTitle: string;
+    galleryLead: string;
   };
   about: {
     metaTitle: string;
@@ -231,13 +237,19 @@ export const T: Record<Lang, Dict> = {
       metaDescription:
         'Lucrări de drumuri la care am asigurat topografie, planificare și coordonare: Dumbrăvița, Săravale, Biled și județul Arad.',
       title: 'Proiecte recente',
-      lead: 'Câteva dintre lucrările de infrastructură rutieră la care am lucrat.',
+      lead: 'Câteva dintre lucrările de infrastructură rutieră la care am lucrat, cu fotografii din teren.',
+      photos: 'fotografii',
+      prev: 'Fotografia anterioară',
+      next: 'Fotografia următoare',
+      close: 'Închide',
+      galleryTitle: 'Din teren',
+      galleryLead: 'Fotografii de pe șantierele noastre. Apasă pe o fotografie ca s-o vezi mărită.',
       items: [
-        { place: 'Dumbrăvița', county: 'Timiș', title: 'Reparații străzi', text: 'Lucrări de reparații pe străzile din Dumbrăvița.', service: 'planning' },
-        { place: 'Săravale', county: 'Timiș', title: 'Asfaltare drumuri', text: 'Asfaltarea drumurilor din comuna Săravale.', service: 'survey' },
-        { place: 'Biled', county: 'Timiș', title: 'Drumuri agricole de exploatație', text: 'Amenajarea drumurilor de exploatație agricolă din Biled.', service: 'survey' },
-        { place: 'Arad', county: 'Arad', title: 'Drumuri județene', text: 'Lucrări pe drumuri județene din județul Arad.', service: 'planning' },
-        { place: 'Dumbrăvița', county: 'Timiș', title: 'Modernizare străzi', text: 'Modernizarea străzilor din Dumbrăvița.', service: 'planning' },
+        { place: 'Dumbrăvița', county: 'Timiș', title: 'Reparații și întreținere străzi', text: 'Execuția lucrărilor de reparații și întreținere a străzilor din comuna Dumbrăvița.', gallery: 'dumbravita-reparatii', service:'planning' },
+        { place: 'Săravale', county: 'Timiș', title: 'Asfaltare străzi și accese', text: 'Asfaltarea străzilor și amenajarea acceselor în comuna Săravale.', gallery: 'saravale', service:'survey' },
+        { place: 'Biled', county: 'Timiș', title: 'Drumuri de acces agricol', text: 'Modernizarea drumurilor de acces agricol, în cadrul proiectului „Modernizarea infrastructurii de acces agricolă din comuna Biled, județul Timiș”.', gallery: 'biled', service:'survey' },
+        { place: 'Arad', county: 'Arad', title: 'Întreținere drumuri județene', text: 'Lucrări de întreținere a drumurilor județene din județul Arad.', gallery: 'arad', service:'planning' },
+        { place: 'Dumbrăvița', county: 'Timiș', title: 'Modernizare străzi', text: 'Modernizarea infrastructurii rutiere: trasarea drumului și a rigolei carosabile.', gallery: 'dumbravita-modernizare', service:'planning' },
       ],
     },
     about: {
@@ -463,13 +475,19 @@ export const T: Record<Lang, Dict> = {
       metaDescription:
         'Road works where we provided surveying, planning and coordination: Dumbrăvița, Săravale, Biled and Arad County, Romania.',
       title: 'Recent projects',
-      lead: 'Some of the road infrastructure works we have worked on.',
+      lead: 'Some of the road infrastructure works we have worked on, with photos from the site.',
+      photos: 'photos',
+      prev: 'Previous photo',
+      next: 'Next photo',
+      close: 'Close',
+      galleryTitle: 'From the field',
+      galleryLead: 'Photos from our sites. Tap a photo to see it larger.',
       items: [
-        { place: 'Dumbrăvița', county: 'Timiș', title: 'Street repairs', text: 'Repair works on the streets of Dumbrăvița.', service: 'planning' },
-        { place: 'Săravale', county: 'Timiș', title: 'Road asphalting', text: 'Asphalting of the roads in Săravale commune.', service: 'survey' },
-        { place: 'Biled', county: 'Timiș', title: 'Agricultural access roads', text: 'Building agricultural access roads in Biled.', service: 'survey' },
-        { place: 'Arad', county: 'Arad', title: 'County roads', text: 'Works on county roads in Arad County.', service: 'planning' },
-        { place: 'Dumbrăvița', county: 'Timiș', title: 'Street modernization', text: 'Modernization of the streets of Dumbrăvița.', service: 'planning' },
+        { place: 'Dumbrăvița', county: 'Timiș', title: 'Street repairs and maintenance', text: 'Repair and maintenance works on the streets of Dumbrăvița commune.', gallery: 'dumbravita-reparatii', service:'planning' },
+        { place: 'Săravale', county: 'Timiș', title: 'Road asphalting', text: 'Asphalting of streets and building of access ways in Săravale commune.', gallery: 'saravale', service:'survey' },
+        { place: 'Biled', county: 'Timiș', title: 'Agricultural access roads', text: 'Modernization of agricultural access roads, as part of the project “Modernization of the agricultural access infrastructure of Biled commune, Timiș County”.', gallery: 'biled', service:'survey' },
+        { place: 'Arad', county: 'Arad', title: 'County roads', text: 'Maintenance works on county roads in Arad County.', gallery: 'arad', service:'planning' },
+        { place: 'Dumbrăvița', county: 'Timiș', title: 'Street modernization', text: 'Modernization of the road infrastructure: setting out the road and the drivable gutter.', gallery: 'dumbravita-modernizare', service:'planning' },
       ],
     },
     about: {
@@ -695,13 +713,19 @@ export const T: Record<Lang, Dict> = {
       metaDescription:
         'Straßenbauarbeiten, bei denen wir Vermessung, Planung und Koordination übernommen haben: Dumbrăvița, Săravale, Biled und Kreis Arad, Rumänien.',
       title: 'Aktuelle Projekte',
-      lead: 'Einige der Straßenbauprojekte, an denen wir gearbeitet haben.',
+      lead: 'Einige der Straßenbauprojekte, an denen wir gearbeitet haben, mit Fotos von der Baustelle.',
+      photos: 'Fotos',
+      prev: 'Vorheriges Foto',
+      next: 'Nächstes Foto',
+      close: 'Schließen',
+      galleryTitle: 'Von der Baustelle',
+      galleryLead: 'Fotos von unseren Baustellen. Tippen Sie auf ein Foto, um es zu vergrößern.',
       items: [
-        { place: 'Dumbrăvița', county: 'Timiș', title: 'Straßenreparaturen', text: 'Reparaturarbeiten an den Straßen von Dumbrăvița.', service: 'planning' },
-        { place: 'Săravale', county: 'Timiș', title: 'Asphaltierung von Straßen', text: 'Asphaltierung der Straßen in der Gemeinde Săravale.', service: 'survey' },
-        { place: 'Biled', county: 'Timiș', title: 'Landwirtschaftliche Wege', text: 'Bau landwirtschaftlicher Wirtschaftswege in Biled.', service: 'survey' },
-        { place: 'Arad', county: 'Arad', title: 'Kreisstraßen', text: 'Arbeiten an Kreisstraßen im Kreis Arad.', service: 'planning' },
-        { place: 'Dumbrăvița', county: 'Timiș', title: 'Straßenmodernisierung', text: 'Modernisierung der Straßen von Dumbrăvița.', service: 'planning' },
+        { place: 'Dumbrăvița', county: 'Timiș', title: 'Straßenreparatur und -instandhaltung', text: 'Reparatur- und Instandhaltungsarbeiten an den Straßen der Gemeinde Dumbrăvița.', gallery: 'dumbravita-reparatii', service:'planning' },
+        { place: 'Săravale', county: 'Timiș', title: 'Asphaltierung von Straßen', text: 'Asphaltierung von Straßen und Bau von Zufahrten in der Gemeinde Săravale.', gallery: 'saravale', service:'survey' },
+        { place: 'Biled', county: 'Timiș', title: 'Landwirtschaftliche Wege', text: 'Modernisierung landwirtschaftlicher Zufahrtswege im Rahmen des Projekts „Modernisierung der landwirtschaftlichen Zufahrtsinfrastruktur der Gemeinde Biled, Kreis Timiș“.', gallery: 'biled', service:'survey' },
+        { place: 'Arad', county: 'Arad', title: 'Kreisstraßen', text: 'Instandhaltungsarbeiten an Kreisstraßen im Kreis Arad.', gallery: 'arad', service:'planning' },
+        { place: 'Dumbrăvița', county: 'Timiș', title: 'Straßenmodernisierung', text: 'Modernisierung der Straßeninfrastruktur: Absteckung der Fahrbahn und der befahrbaren Rinne.', gallery: 'dumbravita-modernizare', service:'planning' },
       ],
     },
     about: {

@@ -5,6 +5,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Lightbox from '../components/Lightbox.astro';
 import { LANGS, LANG_LABELS, ROUTES, DEFAULT_LANG, T, type Lang, type PageKey } from '../i18n';
 import { SITE } from '../config';
 
@@ -98,5 +99,6 @@ const business = {
     </main>
     <Footer lang={lang} />
     <WhatsAppButton lang={lang} />
+    <Lightbox lang={lang} />
   </body>
 </html>

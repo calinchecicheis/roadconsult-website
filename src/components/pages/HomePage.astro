@@ -5,6 +5,8 @@ import ServiceCards from '../ServiceCards.astro';
 import Equipment from '../Equipment.astro';
 import ProjectRows from '../ProjectRows.astro';
 import ContactCard from '../ContactCard.astro';
+import PhotoCarousel, { type Photo } from '../PhotoCarousel.astro';
+import PHOTOS from '../../data/photos.json';
 import { SITE } from '../../config';
 import { PROJECT_PLACES, ROUTES, T, type Lang } from '../../i18n';
 interface Props {
@@ -12,6 +14,10 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = T[lang];
+// A mix of site photos for the homepage strip: the first three of every project, alternating.
+const photos = PHOTOS as Record<string, Photo[]>;
+const groups = t.projects.items.map((p) => photos[p.gallery] ?? []);
+const highlights: Photo[] = [0, 1, 2].flatMap((i) => groups.map((g) => g[i]).filter(Boolean));
 const website = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -125,6 +131,16 @@ const website = {
       <a href={ROUTES.projects[lang]} class="more">{t.cta.allProjects}</a>
     </div>
     <ProjectRows lang={lang} />
+    <div class="field">
+      <PhotoCarousel
+        photos={highlights}
+        alt={t.projects.galleryTitle}
+        label={t.projects.galleryTitle}
+        prev={t.projects.prev}
+        next={t.projects.next}
+        countLabel={t.projects.photos}
+      />
+    </div>
   </section>
 
   <section class="container section" id="despre">
@@ -271,6 +287,9 @@ const website = {
     left: 0;
     right: 0;
     bottom: 0;
+  }
+  .field {
+    margin-top: 16px;
   }
   .places {
     margin-top: 48px;

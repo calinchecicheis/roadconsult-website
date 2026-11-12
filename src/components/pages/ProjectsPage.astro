@@ -1,8 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../PageHero.astro';
-import ProjectRows from '../ProjectRows.astro';
+import PhotoCarousel, { type Photo } from '../PhotoCarousel.astro';
 import ContactCard from '../ContactCard.astro';
+import PHOTOS from '../../data/photos.json';
 import { SITE } from '../../config';
 import { ROUTES, T, type Lang } from '../../i18n';
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = T[lang];
+const photos = PHOTOS as Record<string, Photo[]>;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -24,14 +26,109 @@ const jsonLd = [
 
 <Layout lang={lang} page="projects" title={t.projects.metaTitle} description={t.projects.metaDescription} jsonLd={jsonLd}>
   <PageHero lang={lang} kicker={t.nav.projects} title={t.projects.title} lead={t.projects.lead} crumbs={[{ label: t.nav.projects }]} />
+
   <section class="container section first">
-    <ProjectRows lang={lang} headingLevel="h2" />
+    <ol class="projects">
+      {
+        t.projects.items.map((p, i) => (
+          <li class="panel project">
+            <div class="head">
+              <span class="idx mono">{String(i + 1).padStart(2, '0')}</span>
+              <div class="what">
+                <p class="where mono">
+                  {p.place} · {p.county}
+                </p>
+                <h2>{p.title}</h2>
+                <p class="text">{p.text}</p>
+              </div>
+              <a class="tag mono" href={ROUTES[p.service][lang]}>
+                {t.services[p.service].title}
+              </a>
+            </div>
+            <PhotoCarousel
+              photos={photos[p.gallery] ?? []}
+              alt={`${p.title}, ${p.place}`}
+              label={`${p.title}, ${p.place}`}
+              prev={t.projects.prev}
+              next={t.projects.next}
+              countLabel={t.projects.photos}
+              eager={i === 0}
+            />
+          </li>
+        ))
+      }
+    </ol>
   </section>
+
   <ContactCard lang={lang} />
 </Layout>
 
 <style>
   .first {
     padding-top: 24px;
+  }
+  .projects {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .project {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .head {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 16px 24px;
+    align-items: start;
+  }
+  .idx {
+    font-size: 13px;
+    color: var(--label);
+    padding-top: 2px;
+  }
+  .what {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .where {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--label);
+  }
+  h2 {
+    font-size: 24px;
+  }
+  .text {
+    color: var(--text-soft);
+    max-width: 48em;
+  }
+  .tag {
+    font-size: 12px;
+    padding: 6px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .tag:hover {
+    border-color: var(--text);
+  }
+  @media (max-width: 760px) {
+    .head {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .idx {
+      display: none;
+    }
+    .tag {
+      justify-self: start;
+    }
   }
 </style>
