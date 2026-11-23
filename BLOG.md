@@ -1,6 +1,8 @@
 # Writing blog articles
 
-This guide is for anyone adding an article, including the scheduled task that drafts one as a pull request.
+This guide is for anyone adding an article, including the scheduled task that writes and publishes one on the 1st and 15th of each month.
+
+Publishing is automatic (Calin's decision, 2026-11-23): the scheduled task opens a pull request, verifies it with the checklist below, waits for the Cloudflare Pages check, and squash-merges it itself. Merging to `main` deploys to the live site. If any check fails and can't be fixed, it leaves the pull request open for Calin instead of merging.
 
 ## Where articles live
 
@@ -49,7 +51,7 @@ Slugs are lowercase, hyphenated, without diacritics, in the article's own langua
 
 Rotate between the three services: topographic surveys and setting out, planning and coordinating road works, technical consulting (offers, documentation, communication with the client). Prefer practical explainers and checklists ("what happens before the asphalt", "what a beneficiary should ask for"). Check `src/content/blog/` first so a topic isn't repeated.
 
-## Before opening the pull request
+## Before merging (publishing)
 
 - `npm run build` passes.
 - All three languages exist and share the same `key`.
