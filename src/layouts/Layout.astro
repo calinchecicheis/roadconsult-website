@@ -16,10 +16,19 @@ interface Props {
   description?: string;
   noindex?: boolean;
   jsonLd?: object[];
+  /** Path of this page when it is not one of the fixed ROUTES (blog articles). */
+  path?: string;
+  /** Translations of this page; languages left out fall back to ROUTES[page]. */
+  alternates?: Partial<Record<Lang, string>>;
+  ogType?: 'website' | 'article';
 }
 
-const { lang, page, title, description = SITE.description, noindex = false, jsonLd = [] } = Astro.props;
-const canonical = new URL(ROUTES[page][lang], SITE.url).href;
+const { lang, page, title, description = SITE.description, noindex = false, jsonLd = [], path, alternates, ogType = 'website' } = Astro.props;
+const canonical = new URL(path ?? ROUTES[page][lang], SITE.url).href;
+const hreflangs: [Lang, string][] = alternates
+  ? (Object.entries(alternates) as [Lang, string][])
+  : LANGS.map((l) => [l, ROUTES[page][l]]);
+const switchTo = Object.fromEntries(LANGS.map((l) => [l, alternates?.[l] ?? ROUTES[page][l]])) as Record<Lang, string>;
 const ogImage = new URL('/og-image.png', SITE.url).href;
 
 const business = {
@@ -61,11 +70,13 @@ const business = {
     {noindex && <meta name="robots" content="noindex" />}
     {
       !noindex &&
-        LANGS.map((l) => (
-          <link rel="alternate" hreflang={l} href={new URL(ROUTES[page][l], SITE.url).href} />
-        ))
+        hreflangs.map(([l, href]) => <link rel="alternate" hreflang={l} href={new URL(href, SITE.url).href} />)
     }
-    {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(ROUTES[page][DEFAULT_LANG], SITE.url).href} />}
+    {
+      !noindex && hreflangs.some(([l]) => l === DEFAULT_LANG) && (
+        <link rel="alternate" hreflang="x-default" href={new URL(switchTo[DEFAULT_LANG], SITE.url).href} />
+      )
+    }
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
@@ -80,7 +91,7 @@ const business = {
       })();
     </script>
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -93,7 +104,7 @@ const business = {
   </head>
   <body>
     <a class="sr-only" href="#main">Skip to content</a>
-    <Header lang={lang} page={page} />
+    <Header lang={lang} page={page} links={switchTo} />
     <main id="main">
       <slot />
     </main>
